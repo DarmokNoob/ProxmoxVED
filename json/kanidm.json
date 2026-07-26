@@ -1,0 +1,46 @@
+{
+  "name": "Kanidm",
+  "slug": "kanidm",
+  "categories": [
+    6
+  ],
+  "date_created": "2026-07-26",
+  "type": "ct",
+  "updateable": true,
+  "privileged": false,
+  "has_arm": true,
+  "interface_port": 8443,
+  "documentation": "https://kanidm.github.io/kanidm/stable/",
+  "website": "https://kanidm.com/",
+  "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/kanidm.webp",
+  "config_path": "/etc/kanidmd/server.toml",
+  "description": "Kanidm is a simple, secure identity management platform written in Rust, providing accounts, groups, and OAuth2/OIDC SSO plus a read-only LDAP gateway, with built-in replication for primary/backup deployments.",
+  "install_methods": [
+    {
+      "type": "default",
+      "script": "ct/kanidm.sh",
+      "config_path": "/etc/kanidmd/server.toml",
+      "resources": {
+        "cpu": 2,
+        "ram": 1024,
+        "hdd": 4,
+        "os": "Debian",
+        "version": "13"
+      }
+    }
+  ],
+  "default_credentials": {
+    "username": null,
+    "password": null
+  },
+  "notes": [
+    {
+      "text": "Break-glass 'admin' and 'idm_admin' passwords are generated during install and saved to /root/kanidmd.creds inside the container.",
+      "type": "info"
+    },
+    {
+      "text": "domain/origin default to the container's hostname with a self-signed certificate. Edit /etc/kanidmd/server.toml and re-run 'kanidmd cert-generate' + 'kanidmd domain rename' before pointing real DNS at this host.",
+      "type": "warning"
+    }
+  ]
+}

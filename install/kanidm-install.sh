@@ -35,14 +35,14 @@ sed -i \
   -e "s|^bindaddress = .*|bindaddress = \"0.0.0.0:8443\"|" \
   -e "s|^#domain = .*|domain = \"${KANIDM_DOMAIN}\"|" \
   -e "s|^#origin = .*|origin = \"https://${KANIDM_DOMAIN}:8443\"|" \
-  /etc/kanidmd/server.toml
-cat <<EOF >>/etc/kanidmd/server.toml
+  -e '/^\[online_backup\]/i\
+#   Read-only LDAP/LDAPS gateway - disabled by default.\
+#   Uncomment to expose the directory over LDAP (e.g. for a NAS,\
+#   UniFi, or anything that only speaks classic directory bind).\
+# ldapbindaddress = "0.0.0.0:3636"\
 
-#   Read-only LDAP/LDAPS gateway - disabled by default.
-#   Uncomment to expose the directory over LDAP (e.g. for a NAS,
-#   UniFi, or anything that only speaks classic directory bind).
-# ldapbindaddress = "0.0.0.0:3636"
-EOF
+' \
+  /etc/kanidmd/server.toml
 chown root:kanidmd /etc/kanidmd/server.toml
 chmod 640 /etc/kanidmd/server.toml
 msg_ok "Configured Kanidm"
